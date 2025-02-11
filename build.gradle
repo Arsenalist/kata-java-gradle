@@ -2,15 +2,16 @@ plugins {
     id 'java'
 }
 
-group = 'com.example'
-version = '1.0-SNAPSHOT'
-
 repositories {
-    mavenCentral()
+    flatDir {
+        dirs 'libs'
+    }
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
+    fileTree(dir: 'libs', include: '*.jar').each { file ->
+        testImplementation name: file.name.replace('.jar', '')
+    }
 }
 
 test {
